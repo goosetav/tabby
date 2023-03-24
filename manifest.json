@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Tabby",
+  "description": "Basic Tab Management",
+  "version": "1.4",
+  "action": {
+    "default_popup": "popup/tabby.html",
+    "default_icon": "images/tabby-16.png"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "icons": {
+    "16": "images/tabby-16.png",
+    "32": "images/tabby-32.png",
+    "48": "images/tabby-48.png",
+    "128": "images/tabby-128.png"
+  }
+}
