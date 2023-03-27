@@ -1,16 +1,9 @@
-
-
-const current = await chrome.windows.getCurrent();
-
-// 
-//   const tabIds = tabs.map(({ id }) => id);
-
 async function merge() {
     console.log("merging...");
     const tabs = await chrome.tabs.query({});
-    
+    const current = await chrome.windows.getCurrent();
+
     for (const tab of tabs) {
-    // console.log(tab.windowId + " : " + tab.title);
         if (tab.windowId != current.id) {
             chrome.tabs.move(tab.id,{ index: -1, windowId: current.id });
         }
@@ -22,11 +15,10 @@ async function sort() {
     const tabs = await chrome.tabs.query({});
 
     const collator = new Intl.Collator();
-    tabs.sort((a, b) => collator.compare(domain(a.url), domain(b.url)));
+    tabs.sort((a, b) => collator.compare(sortkey(a.url), sortkey(b.url)));
 
     for (const [idx, tab] of tabs.entries()) {
         if (!tab.pinned) {
-            console.log("moving" + tab.url + " to index " + idx);
             chrome.tabs.move(tab.id, { index: idx+1, windowId: tab.windowId });
         }
     }
@@ -44,9 +36,9 @@ async function dedupe() {
     }
 }
 
-function domain(s) {
+function sortkey(s) {
     let url = (new URL(s));
-    return url.hostname.replace('www.', '');
+    return url.hostname.replace('www.', '') + "/" + url.pathname + url.search
 }
 
 document.querySelector("button#merge").addEventListener("click", merge);
