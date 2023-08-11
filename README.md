@@ -23,6 +23,6 @@ Personal experiment on tab management in chrome
 * Hovering and clicking the tab icon in the list will close that tab. This is useful for cleanig up tabs quickly.
 
 ---
-<br>
 _Happy tab management!_
-<br>_-Erik_
+<br>
+_-Erik_
