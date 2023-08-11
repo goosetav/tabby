@@ -1,6 +1,6 @@
 # Tabby
 Personal experiment on tab management in chrome
-![Tabby's icon](images/tabby-48.png)
+![Tabby's icon](images/tabby-16.png)
 
 ## How to install
 1. Download the [latest released version](https://github.com/goosetav/tabby/releases/latest)
