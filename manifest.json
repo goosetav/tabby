@@ -2,14 +2,21 @@
   "manifest_version": 3,
   "name": "Tabby",
   "description": "Basic Tab Management",
-  "version": "1.6.20",
+  "version": "1.7.1",
   "action": {
-    "default_popup": "popup/tabby.html",
-    "default_icon": "images/tabby-16.png"
+    "default_icon": "images/tabby-16.png",
+    "default_title": "Click to open Tabby"
+  },
+  "side_panel": {
+    "default_path": "popup/tabby.html"
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "sidePanel"
   ],
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
   "icons": {
     "16": "images/tabby-16.png",
     "32": "images/tabby-32.png",
