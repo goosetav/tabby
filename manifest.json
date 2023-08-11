@@ -2,11 +2,7 @@
   "manifest_version": 3,
   "name": "Tabby",
   "description": "Basic Tab Management",
-<<<<<<< Updated upstream
-  "version": "1.5",
-=======
   "version": "1.6.20",
->>>>>>> Stashed changes
   "action": {
     "default_popup": "popup/tabby.html",
     "default_icon": "images/tabby-16.png"

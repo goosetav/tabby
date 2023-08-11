@@ -24,14 +24,9 @@ async function sort() {
     const moves = [];
 
     for (const [idx, tab] of tabs.entries()) {
-<<<<<<< Updated upstream
         if (!tab.pinned) {
             chrome.tabs.move(tab.id, { index: idx+1, windowId: tab.windowId });
         }
-=======
-        console.log("sorting: [" + (idx + offset) + "] " + tab.url);
-        moves.push(chrome.tabs.move(tab.id, { index: idx + offset, windowId: tab.windowId }));
->>>>>>> Stashed changes
     }
 
     Promise.all(moves).then(updatedTabs);
