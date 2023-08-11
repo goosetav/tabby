@@ -10,17 +10,16 @@
 
     <template id="li_template">
       <li>
-        <a src="#">
-          <img class="favicon" src=""/>
-          <span class="title">Tab Title</span>
-        </a>
+        <a class="close" src="#"><img class="favicon" src=""/></a>
+        <a class="open" src="#"><span class="title">Tab Title</span></a>
       </li>
     </template>
 
-    <h1>Tabby</h1>
-    <button id="merge">Merge</button>
-    <button id="sort">Sort</button>
-    <button id="dedupe">Dedupe</button>
+    <div id="buttons">
+      <button id="merge">Merge</button>
+      <button id="sort">Sort</button>
+      <button id="dedupe">Dedupe</button>
+    </div>
     
     <div id="opentabs">
       <ul></ul>

@@ -1,5 +1,5 @@
 async function merge() {
-    console.log("merging...");
+    console.log("merging windows");
     const tabs = await chrome.tabs.query({windowType: "normal"});
     const current = await chrome.windows.getCurrent();
 
@@ -15,7 +15,7 @@ async function merge() {
 };
 
 async function sort() {
-    console.log("sorting...");
+    console.log("sorting tabs");
     const tabs = await chrome.tabs.query({pinned: false, windowType: "normal"});
     const pinned = await chrome.tabs.query({pinned: true});
     const offset = pinned.length + 1;
@@ -36,7 +36,7 @@ async function sort() {
 }
 
 async function dedupe() {
-    console.log("dedupe...");
+    console.log("deduping tabs");
     const tabs = await chrome.tabs.query({pinned: false, windowType: "normal"});
     const set = new Set();
 
@@ -52,13 +52,10 @@ async function dedupe() {
 }
 
 async function listTabs() {
-    console.log("listing tabs");
+    console.log("loading tab list");
     const current = await chrome.windows.getCurrent();
     const template = document.getElementById('li_template');
-    const tabs = await chrome.tabs.query({pinned: false, windowType: "normal", windowId: current.id});
-
-    const collator = new Intl.Collator();
-    tabs.sort((a, b) => collator.compare(sortkey(a.url), sortkey(b.url)));
+    const tabs = await chrome.tabs.query({windowType: "normal", windowId: current.id});
 
     const elements = new Set();
 
@@ -69,18 +66,16 @@ async function listTabs() {
 
         element.querySelector('.title').textContent = title;
         element.querySelector('img').src = faviconUrl;
-        element.querySelector('a').addEventListener('click', async (e) => {
-            // need to focus window as well as the active tab
-            await chrome.tabs.remove(tab.id);
-            console.log(e);
-            console.log(e.target.closest("li"));
+        element.querySelector('a.close').addEventListener('click', async (e) => {
+            chrome.tabs.remove(tab.id);
             e.target.closest("li").remove();
         });
 
-        
-        elements.add(element);
+        element.querySelector('a.open').addEventListener('click', async (e) => {
+            chrome.tabs.update(tab.id, { active: true });
+        });
 
-        // document.querySelector('ul').append(element);
+        elements.add(element);
     }
     document.querySelector('ul').replaceChildren(...elements);
 }
@@ -100,6 +95,12 @@ document.addEventListener("updatedTabs", listTabs);
 function updatedTabs() {
     document.dispatchEvent(new Event("updatedTabs"));
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendRespoonse) => {
+    console.log("got a message => " + request.message);
+    updatedTabs();
+    sendRespoonse({message: "reloaded tabs"});
+});
 
 updatedTabs();
 
