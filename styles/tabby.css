@@ -1,24 +1,43 @@
 body {
-    width: 20rem;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-inline-start: 0;
-    margin: 1rem 0;
-  }
-  
-  li {
-    padding: 0.25rem;
-  }
-  li:nth-child(odd) {
-    background: #80808030;
-  }
-  li:nth-child(even) {
-    background: #ffffff;
-  }
-  
-  h3,
-  p {
-    margin: 0;
-  }
+  width: 20rem;
+}
+
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  margin: 1rem 0;
+  overflow-x: hidden;
+}
+
+li {
+  padding: 0.5rem;
+  white-space: nowrap;
+}
+
+li:nth-child(odd) {
+  background: #ddd;
+}
+
+li:nth-child(even) {
+  background: #bbb;
+}
+
+span {
+  margin; 0;
+}
+
+.favicon {
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+}
+
+a:hover span {
+  display: none;
+}
+
+a:hover:after {
+  color: red;
+  cursor: pointer;
+  content: "close tab";
+}
