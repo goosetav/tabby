@@ -1,6 +1,6 @@
 async function merge() {
     console.log("merging...");
-    const tabs = await chrome.tabs.query({});
+    const tabs = await chrome.tabs.query({windowType: "normal"});
     const current = await chrome.windows.getCurrent();
 
     const moves = [];
@@ -16,7 +16,11 @@ async function merge() {
 
 async function sort() {
     console.log("sorting...");
-    const tabs = await chrome.tabs.query({});
+    const tabs = await chrome.tabs.query({pinned: false, windowType: "normal"});
+    const pinned = await chrome.tabs.query({pinned: true});
+    const offset = pinned.length + 1;
+
+    console.log("offset: " + offset);
 
     const collator = new Intl.Collator();
     tabs.sort((a, b) => collator.compare(sortkey(a.url), sortkey(b.url)));
@@ -24,9 +28,8 @@ async function sort() {
     const moves = [];
 
     for (const [idx, tab] of tabs.entries()) {
-        if (!tab.pinned) {
-            chrome.tabs.move(tab.id, { index: idx+1, windowId: tab.windowId });
-        }
+        console.log("sorting: [" + (idx + offset) + "] " + tab.url);
+        chrome.tabs.move(tab.id, { index: idx + offset, windowId: tab.windowId });
     }
 
     Promise.all(moves).then(updatedTabs);
@@ -34,7 +37,7 @@ async function sort() {
 
 async function dedupe() {
     console.log("dedupe...");
-    const tabs = await chrome.tabs.query({});
+    const tabs = await chrome.tabs.query({pinned: false, windowType: "normal"});
     const set = new Set();
 
     const removals = [];
@@ -84,7 +87,8 @@ async function listTabs() {
 
 function sortkey(s) {
     let url = (new URL(s));
-    return url.hostname.replace('www.', '') + "/" + url.pathname + url.search
+    let key = url.hostname.replace('www.', '') + "/" + url.pathname + url.search;
+    return key;
 }
 
 
