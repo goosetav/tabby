@@ -22,5 +22,7 @@ Personal experiment on tab management in chrome
 * Clicking a tab name in the list will navigate to that tab. Handy if you have lots of open tabs and can no longer see their names.
 * Hovering and clicking the tab icon in the list will close that tab. This is useful for cleanig up tabs quickly.
 
-Happy tab management!
--E
+---
+<br>
+_Happy tab management!_
+<br>_-Erik_
